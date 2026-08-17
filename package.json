@@ -1,0 +1,68 @@
+{
+  "name": "shrimp-price-monitor-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "南美白对虾塘口价格监测工具本地后端",
+  "type": "module",
+  "main": "out/main/index.js",
+  "exports": {
+    ".": "./dist/src/index.js"
+  },
+  "scripts": {
+    "fixtures": "node scripts/generate-fixtures.mjs",
+    "build:backend": "tsc -p tsconfig.json && npm run verify:package-entry",
+    "build:app": "electron-vite build",
+    "build": "npm run build:backend && npm run build:app",
+    "dev": "electron-vite dev",
+    "preview": "electron-vite preview",
+    "seed": "node scripts/seed-dev-data.mjs",
+    "verify:package-entry": "node --input-type=module -e \"const m = await import('shrimp-price-monitor-backend'); if (typeof m.ShrimpMonitorBackend !== 'function') throw new Error('Backend package entry is invalid')\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p electron/tsconfig.json --noEmit && tsc -p renderer/tsconfig.json --noEmit",
+    "test": "npm run fixtures && vitest run",
+    "test:coverage": "vitest run --coverage",
+    "e2e": "npm run build && playwright test",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "check": "npm run typecheck && npm run test",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.80",
+    "@tesseract.js-data/chi_sim": "^1.0.0",
+    "@tesseract.js-data/eng": "^1.0.0",
+    "cheerio": "^1.1.2",
+    "exceljs": "^4.4.0",
+    "pdfjs-dist": "^5.4.149",
+    "tesseract.js": "^6.0.1"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^6.3.2",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^5.2.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "antd": "^6.6.0",
+    "dayjs": "^1.11.21",
+    "echarts": "^6.1.0",
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "typescript": "^5.9.2",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.4"
+  },
+  "allowScripts": {
+    "electron@43.4.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true,
+    "electron-winstaller@5.4.0": true,
+    "tesseract.js@6.0.1": true
+  }
+}

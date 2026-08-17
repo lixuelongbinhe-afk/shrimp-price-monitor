@@ -1,0 +1,25 @@
+appId: com.shrimp.pricemonitor
+productName: 南美白对虾价格监测
+copyright: Copyright © 2026
+asar: true
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+asarUnpack:
+  - node_modules/@napi-rs/canvas/**
+  - node_modules/tesseract.js/**
+  - node_modules/tesseract.js-core/**
+  - node_modules/@tesseract.js-data/**
+  - node_modules/pdfjs-dist/**
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+  shortcutName: 南美白对虾价格监测
